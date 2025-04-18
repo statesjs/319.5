@@ -1,10 +1,8 @@
-// routes/grades_agg.js
 import express from "express";
 import { Grade } from "../models/gradeModel.js";
 
 const router = express.Router();
 
-// Example aggregation: average score by type for a class
 router.get("/average/:classId", async (req, res) => {
   const pipeline = [
     { $match: { class_id: Number(req.params.classId) } },
