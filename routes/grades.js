@@ -19,58 +19,6 @@ router.post("/", async (req, res) => {
   }
 });
 
-// Get a single grade entry
-router.get("/:id", async (req, res) => {
-  try {
-    const grade = await Grade.findById(req.params.id).exec();
-    if (!grade) return res.status(404).send("Not found");
-    res.json(grade);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-});
-
-// Add a score to a grade entry
-router.patch("/:id/add", async (req, res) => {
-  try {
-    const updated = await Grade.findByIdAndUpdate(
-      req.params.id,
-      { $push: { scores: req.body } },
-      { new: true }
-    ).exec();
-    if (!updated) return res.status(404).send("Not found");
-    res.json(updated);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-});
-
-// Remove a score from a grade entry
-router.patch("/:id/remove", async (req, res) => {
-  try {
-    const updated = await Grade.findByIdAndUpdate(
-      req.params.id,
-      { $pull: { scores: req.body } },
-      { new: true }
-    ).exec();
-    if (!updated) return res.status(404).send("Not found");
-    res.json(updated);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-});
-
-// Delete a single grade entry
-router.delete("/:id", async (req, res) => {
-  try {
-    const deleted = await Grade.findByIdAndDelete(req.params.id).exec();
-    if (!deleted) return res.status(404).send("Not found");
-    res.sendStatus(204);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-});
-
 // Get route for backwards compatibility
 router.get("/student/:id", (_req, res) => {
   res.redirect(`/grades/learner/${_req.params.id}`);
@@ -135,6 +83,58 @@ router.delete("/class/:id", async (req, res) => {
     const result = await Grade.deleteMany({ class_id: Number(req.params.id) });
     if (result.deletedCount === 0) return res.status(404).send("Not found");
     res.json({ deletedCount: result.deletedCount });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// Get a single grade entry
+router.get("/:id", async (req, res) => {
+  try {
+    const grade = await Grade.findById(req.params.id).exec();
+    if (!grade) return res.status(404).send("Not found");
+    res.json(grade);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// Add a score to a grade entry
+router.patch("/:id/add", async (req, res) => {
+  try {
+    const updated = await Grade.findByIdAndUpdate(
+      req.params.id,
+      { $push: { scores: req.body } },
+      { new: true }
+    ).exec();
+    if (!updated) return res.status(404).send("Not found");
+    res.json(updated);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// Remove a score from a grade entry
+router.patch("/:id/remove", async (req, res) => {
+  try {
+    const updated = await Grade.findByIdAndUpdate(
+      req.params.id,
+      { $pull: { scores: req.body } },
+      { new: true }
+    ).exec();
+    if (!updated) return res.status(404).send("Not found");
+    res.json(updated);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// Delete a single grade entry
+router.delete("/:id", async (req, res) => {
+  try {
+    const deleted = await Grade.findByIdAndDelete(req.params.id).exec();
+    if (!deleted) return res.status(404).send("Not found");
+    res.sendStatus(204);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
