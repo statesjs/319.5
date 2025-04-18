@@ -27,10 +27,17 @@ router.get("/student/:id", (_req, res) => {
 // Get a learner's grade data
 router.get("/learner/:id", async (req, res) => {
   try {
-    const query = { learner_id: Number(req.params.id) };
-    if (req.query.class) query.class_id = Number(req.query.class);
+    const id = Number(req.params.id);
+    const query = {
+      $or: [{ student_id: id }, { learner_id: id }],
+    };
+    if (req.query.class) {
+      query.class_id = Number(req.query.class);
+    }
     const docs = await Grade.find(query).exec();
-    if (!docs.length) return res.status(404).send("Not found");
+    if (!docs.length) {
+      return res.status(404).send("Not found");
+    }
     res.json(docs);
   } catch (err) {
     res.status(400).json({ error: err.message });
