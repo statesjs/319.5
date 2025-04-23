@@ -2,17 +2,6 @@
 
 # Working with Mongoose (ALAB 319.5.1)
 
-## Setup
-
-1. `npm install`
-2. Create a `.env` at project root:
-
-- MONGO_URI=your-atlas-connection-string
-
-3. `npm run dev` (or `npm start`)
-
-## Project Structure
-
 ```
 319.5/
 ├─ db/             # Mongoose connection
@@ -22,10 +11,10 @@
 ├─ routes/         # Express route handlers
 │  ├─ grades.js
 │  └─ grades_agg.js
-├─ index.js        # Entry point
-├─ .env            # Environment variables (ignored)
+├─ index.js
+├─ .env            # (ignored)
 ├─ .gitignore
-├─ package.json
+├─ package.json     # (ignored)
 └─ README.md
 ```
 
