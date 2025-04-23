@@ -10,7 +10,7 @@ app.use(express.json());
 
 await connectDB();
 
-app.get("/", (_req, res) => res.send("Grade API up and running"));
+app.get("/", (_req, res) => res.send("Welcome to the API."));
 app.use("/grades", gradesRouter);
 app.use("/grades/agg", aggRouter);
 
@@ -21,4 +21,4 @@ app.use((err, _req, res, _next) => {
 });
 
 const PORT = process.env.PORT || 5050;
-app.listen(PORT, () => console.log(`🚀 Listening on port ${PORT}`));
+app.listen(PORT, () => console.log(`Server is running on port: ${PORT}`));
